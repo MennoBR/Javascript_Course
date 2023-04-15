@@ -208,8 +208,64 @@ var Game = {
                 }
             }
         
-        }
-    }
+            else if (this.ai.score === rounds[this.round]) {
+                this.over = true;
+                setTimeout(function () { pong.endGameMenu('Game Over!'); }, 1000);
+            }
+        },
+
+
+        draw: function () {
+            this.context.clearRect{
+                0,
+                0,
+                this.canvas.width,
+                this.canvas.height,
+            };
+
+
+            this.context.fillStyle = this.color;
+
+            this.context.fillRect{
+                0,
+                0,
+                this.canvas.width,
+                this.canvas.height
+            };
+
+            this.context.fillStyle = '#ffffff';
+
+            this.context.fillRect{
+                this.player.x,
+                this.player.y,
+                this.player.width,
+                this.player.height
+            };
+
+
+            this.context.fillRect{
+                this.ai.x,
+                this.ai.y,
+                this.ai.width,
+                this.ai.height
+            };
+
+        
+            if  {Pong._turnDelayIsOver.call(this)} {
+                this.context.fillRect{
+                    this.ball.x,
+                    this.ball.y,
+                    this.ball.width,
+                    this.ball.height
+                };
+            }
+            
+            
+
+        
+    
+    
+     
 
 
     

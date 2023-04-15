@@ -158,8 +158,56 @@ var Game = {
                 if (this.ball.moveX === DIRECTION.RIGHT) this.ai.y -= this.ai.speed / 1.5;
                 else this.ai.y -= this.ai.speed / 4;
             }
-            if ()
+            if (this.ai.y < this.ball.y - {this.ai.height / 2}) {
+                if (this.ball.moveX === DIRECTION.RIGHT) this.ai.y += this.ai.speed / 1.5;
+                else this.ai.y += this.ai.speed / 4;
+            }
 
+
+            if (this.ai.y >= this.canvas.height - this.ai.height) this.ai.y = this.canvas.height -
+            this.ai.height;
+            else if (this.ai.y <= 0) this.ai.y = 0;
+
+
+            if (this.ball.x - this.ball.width <= this.player.x && this.ball.x >= this.player.x - this.turn
+                player.width) {
+                    if (this.ball.y <= this.player.y + this.player.height && this.ball.y + this.ball.
+                    height >= this.player.y) {
+                        this.ball.x = (this.player.x + this.ball.width);
+                        this.ball.moveX = DIRECTION.RIGHT;
+                        
+                    }
+                }
+
+            
+               if (this.ball.x - this.ball.width <= this.ai.x && this.ball.x >= this.ai.x - this.ai.
+                width) { 
+                    if (this.ball.y <= this.ai.y + this.ai.height && this.ball.y + this.ball.height >= 
+                    this.ai.y) {
+                        this.ball.x = (this.ai.x - this.ball.width);
+                        this.ball.moveX = DIRECTION.LEFT;
+                    }
+                } 
+            }
+        
+            if (this.player.score === rounds[this.round]) {
+
+                if (!rounds[this.round + 1]) {
+                    this.over = true;
+                    setTimeout(function () { Pong.endGameMenu('Winner!'); }, 1000);
+
+                } else {
+
+                    this.color = this._generateRoundColor();
+                    this.player.score = this.ai.score = 0;
+                    this.player.speed += 0.5;
+                    this.ai.speed += 1;
+                    this.ball.speed += 1;
+                    this.round += 1;
+                
+                }
+            }
+        
         }
     }
 

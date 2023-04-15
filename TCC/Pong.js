@@ -147,6 +147,19 @@ var Game = {
             else if (this.player.y >= (this.canvas.height = this.player.height)) this.player.y = 
             (this.canvas.height - this.player.height);
 
+            
+            if (this.ball.moveY === DIRECTION.UP) this.ball.y -= (this.ball.speed / 1.5);
+            else if (this.ball.moveY === DIRECTION.DOWN) this.ball.y += (this.ball.speed / 1.5);
+            if (this.ball.moveX === DIRECTION.LEFT) this.ball.x -= this.ball.speed;
+            else if (this.ball.moveX === DIRECTION.RIGHT) this.ball.x += this.ball.speed;
+
+
+            if (this.ai.y > this.ball.y - (this.ai.height / 2)) {
+                if (this.ball.moveX === DIRECTION.RIGHT) this.ai.y -= this.ai.speed / 1.5;
+                else this.ai.y -= this.ai.speed / 4;
+            }
+            if ()
+
         }
     }
 

@@ -326,7 +326,32 @@ var Game = {
                 if (key.keyCode === 40 || key.keyCode === 83) Pong.player.move = DIRECTION.DOWN;
             }};
             
-            
+
+            document.addEventListener{'keyup', function (key) { Pong.player.move = DIRECTION.IDLE; });
+        },
+
+
+        _resetTurn: function(victor, loser) {
+            this.ball = Ball.new.call(this, this.ball.speed);
+            this.turn = loser;
+            this.timer = (new Date()).getTime();
+
+            victor.score++;
+
+        },
+
+
+        _turnDelayIsOver: function() {
+            return ((new Date()).getTime() - this.timer >= 1000);
+        },
+
+
+        _generateRoundColor: function () {
+            var newColor = colors[Math.floor(Math.random() * colors.length)];
+            if (newColor === this.color) return Pong._generateRoundColor();
+            return newColor;
+        }
+    };        
         
 
         

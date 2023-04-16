@@ -5,83 +5,83 @@ var DIRECTION = {
     DOWN: 2,
     LEFT: 3,
     RIGHT: 4
-};
-
-var rounds = [5, 5, 3, 3, 2];
-var colors = ['#labc9c', '#2ecc71', '#3498db', '#8c52ff', '#9b59b6'];
-
-//Desenhando Cubo(bola):
-var Ball = {
-    new: function (incrementSpeed) {
-        return {
-            width: 18,
-            height: 18,
-            x: (this.canvas.width / 2) - 9,
-            y: (this.canvas.height / 2) - 9,
-            moveX: DIRECTION.IDLE,
-            moveY: DIRECTION.IDLE,
-            speed: incrementSpeed || 7
-        };
+  };
+  
+  var rounds = [5, 5, 3, 3, 2];
+  var colors = ['#labc9c', '#2ecc71', '#3498db', '#8c52ff', '#9b59b6'];
+  
+  //Desenhando Cubo(bola):
+  var Ball = {
+    create: function (incrementSpeed) {
+      return {
+        width: 18,
+        height: 18,
+        x: (this.canvas.width / 2) - 9,
+        y: (this.canvas.height / 2) - 9,
+        moveX: DIRECTION.IDLE,
+        moveY: DIRECTION.IDLE,
+        speed: incrementSpeed || 7
+      };
     }
-};
-
-// Direção da bola:
-var Ai = {
-    new: function (side) {
-        return {
-            width: 18,
-            height: 180,
-            x: side === 'left' ? 150 : this.canvas.width - 150,
-            y: (this.canvas.height / 2) - 35,
-            score: 0,
-            move: DIRECTION.IDLE,
-            speed: 8
-
-        };
+  };
+  
+  // Direção da bola:
+  var Ai = {
+    create: function (side) {
+      return {
+        width: 18,
+        height: 180,
+        x: side === 'left' ? 150 : this.canvas.width - 150,
+        y: (this.canvas.height / 2) - 35,
+        score: 0,
+        move: DIRECTION.IDLE,
+        speed: 8
+  
+      };
     }
-};
-
-var Game = {
+  };
+  
+  var Game = {
     initialize: function () {
-        this.canvas = document.querySelector('canvas');
-        this.context = this.canvas.getContext('2d');
-
-        this.canvas.width = 1400;
-        this.canvas.height = 1000;
-
-        this.canvas.style.width = (this.canvas.width / 2) + 'px';
-        this.canvas.style.height = (this.canvas.height / 2) + 'px';
-
-        this.player = Ai.new.call(this, 'left');
-        this.ai = Ai.new.call(this, 'right');
-        this.ball = Ball.new.call(this);
-
-        this.ai.speed = 5;
-        this.running = this.over = false;
-        this.turn = this.ai;
-        this.timer = this.round = 0;
-        this.color = '#8c52ff';
-
-        Pong.menu();
-        Pong.listen();
+      this.canvas = document.querySelector('canvas');
+      this.context = this.canvas.getContext('2d');
+  
+      this.canvas.width = 1400;
+      this.canvas.height = 1000;
+  
+      this.canvas.style.width = (this.canvas.width / 2) + 'px';
+      this.canvas.style.height = (this.canvas.height / 2) + 'px';
+  
+      this.player = Ai.create.call(this, 'left');
+      this.ai = Ai.create.call(this, 'right');
+      this.ball = Ball.create.call(this);
+  
+      this.ai.speed = 5;
+      this.running = this.over = false;
+      this.turn = this.ai;
+      this.timer = this.round = 0;
+      this.color = '#8c52ff';
+  
+      Pong.menu();
+      Pong.listen();
     },
-
+  
     endGameMenu: function (text) {
-        // Mudando a cor do Canvas:
-        Pong.context.font = '45px Courier New';
-        Pong.context.fillStyle = this.color;
-
-        // Deenhando retângulo atrás
-        Pong.context.fillRect (
-            Pong.canvas.width / 2 - 350,
-            Pong.canvas.height / 2 - 48,
-            700,
-            100
-        );
-            
-
-        // Mudando a cor do Canvas:
-        Pong.context.fillStyle = '#ffffff';
+      // Mudando a cor do Canvas:
+      Pong.context.font = '45px Courier New';
+      Pong.context.fillStyle = this.color;
+  
+      // Deenhando retângulo atrás
+      Pong.context.fillRect(
+        Pong.canvas.width / 2 - 350,
+        Pong.canvas.height / 2 - 48,
+        700,
+        100
+      );
+  
+      // Mudando a cor do Canvas:
+      Pong.context.fillStyle = '#ffffff';
+  
 
 
         // Desenhando o menu final:
@@ -354,6 +354,8 @@ var Game = {
     };        
         
 
+    var Pong = Object.assign({}, Game);
+    Pong.initialize();
         
     
     

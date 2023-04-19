@@ -71,57 +71,55 @@ var DIRECTION = {
       Pong.context.font = '45px Courier New';
       Pong.context.fillStyle = this.color;
   
-      // Deenhando retângulo atrás
-      Pong.context.fillRect(
-        Pong.canvas.width / 2 - 350,
-        Pong.canvas.height / 2 - 48,
-        700,
-        100
-      );
+    // Desenhando retângulo atrás
+Pong.context.fillRect(
+    Pong.canvas.width / 2 - 350,
+    Pong.canvas.height / 2 - 48,
+    700,
+    100
+  );
   
-      // Mudando a cor do Canvas:
-      Pong.context.fillStyle = '#ffffff';
+// Mudando a cor do Canvas:
+Pong.context.fillStyle = '#ffffff';
+
+// Desenhando o menu final:
+Pong.context.fillText(
+  text,
+  Pong.canvas.width / 2,
+  Pong.canvas.height / 2 + 15
+);
+
+setTimeout(function () {
+  Pong = Object.assign(Pong, Game);
+  Pong.initialize();
+}, 3000);
+
+menu: function () {
+  // Desenhando os objetos Pong:
+  Pong.draw();
+
+  // Mudando a cor e a fonte do Canvas:
+  this.context.font = '50px Courier New';
+  this.context.fillStyle = this.color;
+
+  //Desenhando o retângulo atrás do 'Press..'.
+  this.context.fillRect(
+    this.canvas.width / 2 - 350,
+    this.canvas.height / 2 - 48,
+    700,
+    100
+  );
+}
   
-
-
-        // Desenhando o menu final:
-        Pong.context.fillText {text,
-            Pong.canvas.width / 2,
-            Pong.canvas.height / 2 + 15
-        };
-    }        
- 
-    setTimeout function () {
-        Pong = Object.assign({}, Game);
-        Pong.initialize();
-        }, 3000};
-    },
-   
-
-    menu: function () {
-        // Desenhando os objetos Pong:
-        Pong.draw();
-
-        // Mudando a cor e a fonte do Canvas:
-        this.content.font = '50px Courier New';
-        this.context.fillStyle = this.color;
-
-        //Desenhando o retângulo atrás do 'Press..'.
-        this.context.fillRect{
-            this.canvas.width / 2 - 350,
-            this.canvas.height / 2 - 48,
-            700,
-            100
-        };
-
-        // Mudando a cor do canvas:
-        this.context.fillStyle = '#ffffff';
-
-        this.context.fillText{'Press any key to begin',
-            this.canvas.width / 2,
-            this.canvas.height / 2 + 15
-        };
-    },
+    // Mudando a cor do canvas:
+    this.context.fillStyle = '#ffffff';
+  
+    this.context.fillText(
+      'Press any key to begin',
+      this.canvas.width / 2,
+      this.canvas.height / 2 + 15
+    );
+  }
 
     // Atualizando os Objetos (movimento, AI, Bola, placar, etc...)
     update: function () {

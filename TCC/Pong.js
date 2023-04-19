@@ -213,70 +213,36 @@ menu: function () {
         },
 
 
-        draw: function () {
-            this.context.clearRect{
-                0,
-                0,
-                this.canvas.width,
-                this.canvas.height,
-            };
-
-
+        draw: function() {
+            this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
             this.context.fillStyle = this.color;
-
-            this.context.fillRect{
-                0,
-                0,
-                this.canvas.width,
-                this.canvas.height
-            };
-
+            this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
             this.context.fillStyle = '#ffffff';
-
-            this.context.fillRect{
-                this.player.x,
-                this.player.y,
-                this.player.width,
-                this.player.height
-            };
-
-
-            this.context.fillRect{
-                this.ai.x,
-                this.ai.y,
-                this.ai.width,
-                this.ai.height
-            };
-
-        
-            if  {Pong._turnDelayIsOver.call(this)} {
-                this.context.fillRect{
-                    this.ball.x,
-                    this.ball.y,
-                    this.ball.width,
-                    this.ball.height
-                };
+            this.context.fillRect(this.player.x, this.player.y, this.player.width, this.player.height);
+            this.context.fillRect(this.ai.x, this.ai.y, this.ai.width, this.ai.height);
+          
+            if (Pong._turnDelayIsOver.call(this)) {
+              this.context.fillRect(this.ball.x, this.ball.y, this.ball.width, this.ball.height);
             }
-            
-            
+          
             this.context.beginPath();
             this.context.setLineDash([7, 15]);
-            this.context.moveTo((this.canvas.width / 2), this.canvas.height - 140);
-            this.context.lineTo((this.canvas.width / 2), 140);
+            this.context.moveTo(this.canvas.width / 2, this.canvas.height - 140);
+            this.context.lineTo(this.canvas.width / 2, 140);
             this.context.lineWidth = 10;
             this.context.strokeStyle = '#ffffff';
             this.context.stroke();
-
+          
             this.context.font = '100px Courier New';
             this.context.textAlign = 'center';
-
-            this.context.fillText{
-                this.player.score.toString(),
-                (this.canvas.width / 2) - 300,
-                200
-            };
-
-
+          
+            this.context.fillText(
+              this.player.score.toString(),
+              this.canvas.width / 2 - 300,
+              200
+            );
+          },
+          
             this.context.fillText{
                 this.ai.score.toString(),
                 (this.canvas.width / 2) + 300,
@@ -286,75 +252,78 @@ menu: function () {
 
             this.context.font = '30px Courier New';
 
-
-            this.context.fillText{
-                'Round' + (Pong.round + 1),
-                (this.canvas.width / 2),
-                35
-            };
-
+            this.context.fillText(
+            'Round ' + (Pong.round + 1),
+            this.canvas.width / 2,
+            35
+            );
 
             this.context.font = '40px Courier';
 
-            this.context.fillText{
-                rounds[Pong.round] ? rounds[Pong.round] : rounds[Pong.round - 1],
-                {this.canvas.width / 2),
-                100
-            };
-        },
+            this.context.fillText(
+            rounds[Pong.round] ? rounds[Pong.round] : rounds[Pong.round - 1],
+            this.canvas.width / 2,
+            100
+            );
 
-        loop: function () {
-            Pong.update();
-            Pong.draw();
-        
-
-            if (!Pong.over) requestAnimationFrame(Pong.loop);
-        },
-        
-        listen: function () {
-            document.addEventListener{'keydown', function (key) {
-                if (Pong.running === false) {
-                    Pong.running = true;
-                    window.requestAnimationFrame(Pong.loop);
+            menu: function() {
+                // ...
+            },
+            
+            loop: function() {
+                Pong.update();
+                Pong.draw();
+            
+                if (!Pong.over) {
+                    requestAnimationFrame(Pong.loop);
                 }
+            },
             
-
-                if (key.keyCode === 38 || key.keyCode === 87) Pong.player.move = DIRECTION.UP;
-
-                if (key.keyCode === 40 || key.keyCode === 83) Pong.player.move = DIRECTION.DOWN;
-            }};
+            listen: function() {
+                document.addEventListener('keydown', function(key) {
+                    if (Pong.running === false) {
+                        Pong.running = true;
+                        window.requestAnimationFrame(Pong.loop);
+                    }
             
-
-            document.addEventListener{'keyup', function (key) { Pong.player.move = DIRECTION.IDLE; });
-        },
-
-
-        _resetTurn: function(victor, loser) {
-            this.ball = Ball.new.call(this, this.ball.speed);
-            this.turn = loser;
-            this.timer = (new Date()).getTime();
-
-            victor.score++;
-
-        },
-
-
-        _turnDelayIsOver: function() {
-            return ((new Date()).getTime() - this.timer >= 1000);
-        },
-
-
-        _generateRoundColor: function () {
-            var newColor = colors[Math.floor(Math.random() * colors.length)];
-            if (newColor === this.color) return Pong._generateRoundColor();
-            return newColor;
-        }
-    };        
-        
-
-    var Pong = Object.assign({}, Game);
-    Pong.initialize();
-        
+                    if (key.keyCode === 38 || key.keyCode === 87) {
+                        Pong.player.move = DIRECTION.UP;
+                    }
+            
+                    if (key.keyCode === 40 || key.keyCode === 83) {
+                        Pong.player.move = DIRECTION.DOWN;
+                    }
+                });
+            
+                document.addEventListener('keyup', function(key) {
+                    Pong.player.move = DIRECTION.IDLE;
+                });
+            },
+            
+            _resetTurn: function(victor, loser) {
+                this.ball = Ball.new.call(this, this.ball.speed);
+                this.turn = loser;
+                this.timer = new Date().getTime();
+            
+                victor.score++;
+            },
+            
+            _turnDelayIsOver: function() {
+                return new Date().getTime() - this.timer >= 1000;
+            },
+            
+            _generateRoundColor: function() {
+                var newColor = colors[Math.floor(Math.random() * colors.length)];
+                if (newColor === this.color) {
+                    return Pong._generateRoundColor();
+                }
+                return newColor;
+            }
+            };        
+            
+            var Pong = Object.assign({}, Game);
+            Pong.initialize();
+            
     
     
      

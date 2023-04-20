@@ -252,35 +252,38 @@ menu: function () {
 
             this.context.font = '30px Courier New';
 
-            this.context.fillText(
-            'Round ' + (Pong.round + 1),
-            this.canvas.width / 2,
-            35
-            );
+            this.context.font = '20px Courier';
+this.context.fillStyle = "#FFFFFF";
+this.context.fillText(
+    'Round ' + (Pong.round + 1),
+    this.canvas.width / 2,
+    35
+);
 
-            this.context.font = '40px Courier';
+this.context.font = '40px Courier';
+this.context.fillText(
+    rounds[Pong.round] ? rounds[Pong.round] : rounds[Pong.round - 1],
+    this.canvas.width / 2,
+    100
+);
 
-            this.context.fillText(
-            rounds[Pong.round] ? rounds[Pong.round] : rounds[Pong.round - 1],
-            this.canvas.width / 2,
-            100
-            );
+menu: function() {
+    // ...
+},
 
-            menu: function() {
-                // ...
-            },
+loop: function() {
+    Pong.update();
+    Pong.draw();
+},
+
             
-            loop: function() {
-                Pong.update();
-                Pong.draw();
-            
-                if (!Pong.over) {
-                    requestAnimationFrame(Pong.loop);
+      if (!Pong.over) {
+          requestAnimationFrame(Pong.loop);
                 }
             },
             
-            listen: function() {
-                document.addEventListener('keydown', function(key) {
+    listen: function() {
+        document.addEventListener('keydown', function(key) {
                     if (Pong.running === false) {
                         Pong.running = true;
                         window.requestAnimationFrame(Pong.loop);

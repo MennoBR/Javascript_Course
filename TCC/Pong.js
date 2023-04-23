@@ -1,115 +1,117 @@
 // Variáveis:
 var DIRECTION = {
-    IDLE: 0,
-    UP: 1,
-    DOWN: 2,
-    LEFT: 3,
-    RIGHT: 4
+  IDLE: 0,
+  UP: 1,
+  DOWN: 2,
+  LEFT: 3,
+  RIGHT: 4
+};
+
+var rounds = [5, 5, 3, 3, 2];
+var colors = ['#1abc9c', '#2ecc71', '#3498db', '#8c52ff', '#9b59b6'];
+
+//Desenhando Cubo(bola):
+var Ball = {
+create: function (incrementSpeed) {
+  return {
+    width: 18,
+    height: 18,
+    x: (this.canvas.width / 2) - 9,
+    y: (this.canvas.height / 2) - 9,
+    moveX: DIRECTION.IDLE,
+    moveY: DIRECTION.IDLE,
+    speed: incrementSpeed || 7
   };
-  
-  var rounds = [5, 5, 3, 3, 2];
-  var colors = ['#labc9c', '#2ecc71', '#3498db', '#8c52ff', '#9b59b6'];
-  
-  //Desenhando Cubo(bola):
-  var Ball = {
-    create: function (incrementSpeed) {
-      return {
-        width: 18,
-        height: 18,
-        x: (this.canvas.width / 2) - 9,
-        y: (this.canvas.height / 2) - 9,
-        moveX: DIRECTION.IDLE,
-        moveY: DIRECTION.IDLE,
-        speed: incrementSpeed || 7
-      };
-    }
+}
+};
+
+// Direção da bola:
+var Ai = {
+create: function (side) {
+  return {
+    width: 18,
+    height: 180,
+    x: side === 'left' ? 150 : this.canvas.width - 150,
+    y: (this.canvas.height / 2) - 35,
+    score: 0,
+    move: DIRECTION.IDLE,
+    speed: 8
+
   };
-  
-  // Direção da bola:
-  var Ai = {
-    create: function (side) {
-      return {
-        width: 18,
-        height: 180,
-        x: side === 'left' ? 150 : this.canvas.width - 150,
-        y: (this.canvas.height / 2) - 35,
-        score: 0,
-        move: DIRECTION.IDLE,
-        speed: 8
-  
-      };
-    }
-  };
-  
-  var Game = {
-    initialize: function () {
-      this.canvas = document.querySelector('canvas');
-      this.context = this.canvas.getContext('2d');
-  
-      this.canvas.width = 1400;
-      this.canvas.height = 1000;
-  
-      this.canvas.style.width = (this.canvas.width / 2) + 'px';
-      this.canvas.style.height = (this.canvas.height / 2) + 'px';
-  
-      this.player = Ai.create.call(this, 'left');
-      this.ai = Ai.create.call(this, 'right');
-      this.ball = Ball.create.call(this);
-  
-      this.ai.speed = 5;
-      this.running = this.over = false;
-      this.turn = this.ai;
-      this.timer = this.round = 0;
-      this.color = '#8c52ff';
-  
-      Pong.menu();
-      Pong.listen();
-    },
-  
-    endGameMenu: function (text) {
-      // Mudando a cor do Canvas:
-      Pong.context.font = '45px Courier New';
-      Pong.context.fillStyle = this.color;
-  
-    // Desenhando retângulo atrás
-Pong.context.fillRect(
-    Pong.canvas.width / 2 - 350,
-    Pong.canvas.height / 2 - 48,
+}
+};
+
+var Game = {
+initialize: function () {
+  this.canvas = document.querySelector('canvas');
+  this.context = this.canvas.getContext('2d');
+
+  this.canvas.width = 1400;
+  this.canvas.height = 1000;
+
+  this.canvas.style.width = (this.canvas.width / 2) + 'px';
+  this.canvas.style.height = (this.canvas.height / 2) + 'px';
+
+  this.player = Ai.create.call(this, 'left');
+  this.ai = Ai.create.call(this, 'right');
+  this.ball = Ball.create.call(this);
+
+  this.ai.speed = 5;
+  this.running = this.over = false;
+  this.turn = this.ai;
+  this.timer = this.round = 0;
+  this.color = '#8c52ff';
+
+  Game.menu();
+  Game.listen();
+},
+
+endGameMenu: function (text) {
+  // Mudando a cor do Canvas:
+  Game.context.font = '45px Courier New';
+  Game.context.fillStyle = this.color;
+
+  // Desenhando retângulo atrás
+  Game.context.fillRect(
+    Game.canvas.width / 2 - 350,
+    Game.canvas.height / 2 - 48,
     700,
     100
   );
-  
-// Mudando a cor do Canvas:
-Pong.context.fillStyle = '#ffffff';
 
-// Desenhando o menu final:
-Pong.context.fillText(
-  text,
-  Pong.canvas.width / 2,
-  Pong.canvas.height / 2 + 15
-);
+  // Mudando a cor do Canvas:
+  Game.context.fillStyle = '#ffffff';
 
-setTimeout(function () {
-  Pong = Object.assign(Pong, Game);
-  Pong.initialize();
-}, 3000);
+  // Desenhando o menu final:
+  Game.context.fillText(
+    text,
+    Game.canvas.width / 2,
+    Game.canvas.height / 2 + 15
+  );
+
+  setTimeout(function () {
+    Game.initialize();
+  }, 3000);
+},
 
 menu: function () {
   // Desenhando os objetos Pong:
-  Pong.draw();
+  Game.draw();
 
   // Mudando a cor e a fonte do Canvas:
-  this.context.font = '50px Courier New';
-  this.context.fillStyle = this.color;
+  Game.context.font = '50px Courier New';
+  Game.context.fillStyle = this.color;
 
   //Desenhando o retângulo atrás do 'Press..'.
-  this.context.fillRect(
-    this.canvas.width / 2 - 350,
-    this.canvas.height / 2 - 48,
+  Game.context.fillRect(
+    Game.canvas.width / 2 - 350,
+    Game.canvas.height / 2 - 48,
     700,
     100
   );
-}
+
+  // Mudando a cor do canvas:
+  Game.context.fillStyle = '#ffffff';
   
     // Mudando a cor do canvas:
     this.context.fillStyle = '#ffffff';
